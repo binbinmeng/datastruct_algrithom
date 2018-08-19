@@ -59,6 +59,10 @@ bool ListStack::push(float value) {
     s->next= top;
 
     top =s;
+
+    delete s;
+
+    return true;
 }
 
 bool ListStack::empty() {

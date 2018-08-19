@@ -60,7 +60,7 @@ bool ListStack::push(float value) {
 
     top =s;
 
-    delete s;
+    //delete s;
 
     return true;
 }

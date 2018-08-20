@@ -7,13 +7,15 @@
 using namespace std;
 
 SingleDirectionList::SingleDirectionList() {
+    //Don't have head pionter
      head = nullptr;
 }
 
 SingleDirectionList::SingleDirectionList(int *array, int size) {
-    //head insert method to construct list
+    //Have head pionter
     head = new Node();
 
+    //head insert method to construct list
     head->next = nullptr;
 
     for(int k=0; k<size; ++k)
@@ -26,6 +28,14 @@ SingleDirectionList::SingleDirectionList(int *array, int size) {
 
         head->next = s;
     }
+}
+
+SingleDirectionList::SingleDirectionList(Node *node) {
+    //Have head pionter
+    head = new Node();
+
+    head->next = node;
+
 }
 
 SingleDirectionList::~SingleDirectionList() {
@@ -41,7 +51,7 @@ SingleDirectionList::~SingleDirectionList() {
      }
 }
 
-void SingleDirectionList::Insert(int i, Node *node) {
+void SingleDirectionList::Insert(int i, int value) {
      Node * p = head;
 
      int index =0;
@@ -54,8 +64,25 @@ void SingleDirectionList::Insert(int i, Node *node) {
 
      //at this time, p have reach i-1 position
 
-     node->next = p->next;
-     p->next = node;
+     Node *s =new Node();
+     s->data = value;
+     s->next = p->next;
+     p->next = s;
+}
+
+void SingleDirectionList::Insert(int value) {
+    Node* p = new Node();
+
+    if(p!= nullptr)
+    {
+        p->data = value;
+        p->next = nullptr;
+
+        //default, head insert method
+        p->next = head->next;
+        head->next = p;
+
+    }
 }
 
 void SingleDirectionList::Delete(int i) {
@@ -97,8 +124,38 @@ int SingleDirectionList::Length() {
     return cout;
 }
 
-void SingleDirectionList::Show() {
+Node* SingleDirectionList::Get(int i) {
+    //Get i-th node element
+    Node* p=head->next;
 
+    int j=0;
+    while((p != nullptr) &&(j<i))
+    {
+        p=p->next;
+        j++;
+    }
+
+    return p;
+}
+
+Node* SingleDirectionList::Locate(Node *node) {
+    if(node== nullptr)
+        return NULL;
+
+   Node * p = head->next;
+
+   while((p!= nullptr)&&(p->data!=node->data))
+   {
+       p=p->next;
+
+   }
+
+    return p;
+}
+void SingleDirectionList::Show() {
+    if(head== nullptr)
+        return;
+    //As use head insert method to construct list
     Node *p=head->next;
     while(p != nullptr)
     {
@@ -110,35 +167,111 @@ void SingleDirectionList::Show() {
     std::cout<<"NULL"<<std::endl;
 }
 
-void SingleDirectionList::Reverse() {
+void SingleDirectionList::ReverseShow(Node *phead) {
+     if(phead == nullptr)
+         return;
 
-     if(head == nullptr)
-         return ;
+     Node *p=phead;
+     printf("%d\n",p->data);
+     ReverseShow(p->next);
 
-     Node * pfirst = head->next;
-     Node * pnow = head->next->next;
+
+}
+
+Node* SingleDirectionList::Reverse( Node* phead) {
+
+     if(phead == nullptr)
+         return NULL;
+
+     /*Node * pre = phead->next;
+
+     Node * pnow = phead->next->next;
      Node * pnext = pnow->next;
 
-     pfirst->next = nullptr;
+     pre->next = nullptr;
 
      while(pnext != nullptr)
      {
          pnext = pnow->next;
-         pnow->next = pfirst;
-         pfirst = pnow;
+         pnow->next = pre;
+         pre = pnow;
          pnow = pnext;
+
      }
+    */
 
+    Node * pre = phead->next;
 
-     //print reversed list,which pfirst is head pointer
-    Node *p=pfirst;
-    while(p != nullptr)
+    Node * pnow = phead->next->next;
+    Node * pnext = pnow->next;
+
+    pre->next = nullptr;
+
+    while(pnext->next != nullptr)
     {
-        std::cout<<p->data<<"-->";
 
-        p =p->next;
+        pnow->next = pre;
+        pre = pnow;
+        pnow = pnext;
 
+        pnext = pnow->next;
     }
-    std::cout<<"NULL"<<std::endl;
+
+    pnow->next = pre;
+    pnext->next = pnow;
+    pre = pnext;
+    head->next = pnext;
+
+    return pre;
+}
+
+void SingleDirectionList::Delete_Duplication() {
+
+    if(head == nullptr)
+        return;
+
+    Node * pre = head;
+    Node * pcur = head->next;
+    Node * pnext =pcur->next;
+
+    while(pnext->next!= nullptr)
+    {
+        //pcur = pre;
+        //pnext =  pre->next;
+
+        if(pcur->data == pnext->data)
+        {
+            pcur = pnext;
+            pre->next = pcur;
+            pnext = pcur->next;
+        }
+        else{
+            pre = pcur;
+            pcur = pnext;
+            pnext= pnext->next;
+        }
+    }
+}
+
+Node* SingleDirectionList::SortList(Node* phead) {
+    if(head == nullptr)
+        return NULL;
+
+    Node * middle = phead;
+    Node * end = phead;
+
+    while(middle->next!=nullptr && end->next!= nullptr)
+    {
+       middle=middle->next;
+       end=end->next->next;
+    }
+
+    end = SortList(middle);
+
+    middle =SortList(phead);
+
+    //return merge(end,middle);
+
+
 
 }

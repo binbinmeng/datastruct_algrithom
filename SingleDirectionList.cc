@@ -253,6 +253,35 @@ void SingleDirectionList::Delete_Duplication() {
     }
 }
 
+void SingleDirectionList::Insert(Node *pos, int x) {
+     if(pos == nullptr)
+         return;
+
+     Node * newnode = new Node();
+     if(newnode != NULL)
+     {
+        newnode->data = pos->data;
+        pos->data = x;
+        newnode->next = pos->next;
+        pos->next = newnode;
+     }
+}
+
+Node*  SingleDirectionList::FindMiddleNode(Node *phead) {
+    if(phead == NULL)
+        return NULL;
+    Node * fast = phead;
+    Node * slow = phead;
+
+    while(fast->next != nullptr)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+
+    return slow;
+}
+
 Node* SingleDirectionList::SortList(Node* phead) {
     if(head == nullptr)
         return NULL;
@@ -271,7 +300,5 @@ Node* SingleDirectionList::SortList(Node* phead) {
     middle =SortList(phead);
 
     //return merge(end,middle);
-
-
 
 }

@@ -19,19 +19,39 @@ public:
 
       SingleDirectionList(int array[], int size);
 
+      SingleDirectionList(Node * node);
+
       ~SingleDirectionList();
 
-      void Insert(int i, Node * node);
+      void Insert(int i, int value);
+
+      void Insert(int value);
 
       void Delete(int i);
 
       int Length();
 
+      Node * Get(int i);
+
+      Node * Locate(Node * node);
+
+      Node * HeadNode(){ return  head;}
+
       void Show();
 
 public:
 
-      void Reverse();
+      Node* Reverse( Node* phead);
+
+      void Delete_Duplication();
+
+      void Insert(Node* pos, int x);
+
+      Node* FindMiddleNode(Node* phead);
+
+      Node* SortList(Node* phead);
+
+      void ReverseShow(Node* head);
 
 private:
 

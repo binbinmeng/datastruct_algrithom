@@ -4,6 +4,7 @@
 #include "SingleDirectionList.h"
 #include "BinaryTree.h"
 #include "string"
+#include "RingList.h"
 #include "vector"
 
 int stack_test() {
@@ -163,7 +164,7 @@ int test_single_direction_list()
     //list->Delete_Duplication();
 
     //list->Insert(9);
-    std::cout<<list->FindMiddleNode(list->HeadNode())->data<<std::endl;
+    //std::cout<<list->FindMiddleNode(list->HeadNode())->data<<std::endl;
     //list->ReverseShow(list->HeadNode());
 
     list->Show();
@@ -183,6 +184,16 @@ void  test_binary_tree()
     tree->MiddleOderVist(tree->GetRoot());
 }
 
+void test_ringlist()
+{
+     int array[15] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+     RingList * ringlist = new RingList(array, 15);
+     ringlist->Show();
+
+     ringlist->DeleteSkipElement(4);
+     //ringlist->Show();
+
+}
 
 int main()
 {
@@ -196,9 +207,10 @@ int main()
 
     //std::cout<<gcd(30,21)<<std::endl;
 
-    test_single_direction_list();
+    //test_single_direction_list();
 
     //test_binary_tree();
+    test_ringlist();
 
     std::cout << "Hello, World!" << std::endl;
 
